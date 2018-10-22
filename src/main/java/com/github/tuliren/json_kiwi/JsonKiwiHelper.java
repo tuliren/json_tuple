@@ -15,7 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
 /**
- * Json helper that converts json objects {@link JsonObject} from and to key value pairs ({@link JsonTuple}).
+ * Json helper that converts json objects {@link JsonObject} from and to key value tuple ({@link JsonTuple}).
  * <p>
  * To convert json object to tuples, use {@link JsonKiwiHelper#toTupleList}.
  * To convert json tuples to object, use {@link JsonKiwiHelper#fromTupleList}.
@@ -35,7 +35,7 @@ public final class JsonKiwiHelper {
   /**
    * @return a list of {@link JsonTuple} representing the input {@param json} under {@param parentPaths}.
    */
-  public static List<JsonTuple> toTupleList(List<TuplePath> parentPaths, JsonObject json) {
+  public static List<JsonTuple> toTupleList(List<KeyPath> parentPaths, JsonObject json) {
     List<JsonTuple> tuples = Lists.newArrayList();
 
     Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
@@ -44,7 +44,7 @@ public final class JsonKiwiHelper {
     }
 
     for (Map.Entry<String, JsonElement> entry : entrySet) {
-      List<TuplePath> childPaths = Lists.newArrayList(parentPaths);
+      List<KeyPath> childPaths = Lists.newArrayList(parentPaths);
       String key = entry.getKey();
       JsonElement jsonElement = entry.getValue();
 
@@ -53,7 +53,7 @@ public final class JsonKiwiHelper {
         continue;
       }
 
-      childPaths.add(new ElementPath(entry.getKey()));
+      childPaths.add(new ElementKeyPath(entry.getKey()));
       if (jsonElement.isJsonPrimitive()) {
         tuples.add(createPrimitiveTuple(childPaths, jsonElement.getAsJsonPrimitive()));
       } else if (jsonElement.isJsonObject()) {
@@ -68,19 +68,19 @@ public final class JsonKiwiHelper {
     return tuples;
   }
 
-  private static List<JsonTuple> getTupleListFromArray(List<TuplePath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
+  private static List<JsonTuple> getTupleListFromArray(List<KeyPath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
     List<JsonTuple> tuples = Lists.newArrayListWithCapacity(jsonArray.size());
     int size = jsonArray.size();
 
     if (size == 0) {
-      List<TuplePath> childPaths = Lists.newArrayList(parentPaths);
-      childPaths.add(new ArrayPath(arrayName, 0, 0));
+      List<KeyPath> childPaths = Lists.newArrayList(parentPaths);
+      childPaths.add(new ArrayKeyPath(arrayName, 0, 0));
       tuples.add(JsonTuple.createEmpty(childPaths));
     }
 
     for (int i = 0; i < jsonArray.size(); i++) {
-      List<TuplePath> childPaths = Lists.newArrayList(parentPaths);
-      childPaths.add(new ArrayPath(arrayName, i, size));
+      List<KeyPath> childPaths = Lists.newArrayList(parentPaths);
+      childPaths.add(new ArrayKeyPath(arrayName, i, size));
 
       JsonElement jsonElement = jsonArray.get(i);
 
@@ -101,7 +101,7 @@ public final class JsonKiwiHelper {
     return tuples;
   }
 
-  private static JsonTuple createPrimitiveTuple(List<TuplePath> childPaths, JsonPrimitive jsonPrimitive) {
+  private static JsonTuple createPrimitiveTuple(List<KeyPath> childPaths, JsonPrimitive jsonPrimitive) {
     if (jsonPrimitive.isBoolean()) {
       return JsonTuple.createBoolean(childPaths, jsonPrimitive.getAsString());
     } else if (jsonPrimitive.isNumber()) {
@@ -122,17 +122,17 @@ public final class JsonKiwiHelper {
     return json;
   }
 
-  private static void processTuple(JsonElement parentElement, List<TuplePath> paths, ValueType type, String value) {
+  private static void processTuple(JsonElement parentElement, List<KeyPath> paths, ValueType type, String value) {
     Preconditions.checkArgument(!paths.isEmpty());
-    TuplePath childPath = paths.get(0);
+    KeyPath childPath = paths.get(0);
     if (childPath.isArray()) {
-      addArrayPath(parentElement, (ArrayPath)childPath, paths.subList(1, paths.size()), type, value);
+      addArrayPath(parentElement, (ArrayKeyPath)childPath, paths.subList(1, paths.size()), type, value);
     } else {
-      addElementPath(parentElement, (ElementPath)childPath, paths.subList(1, paths.size()), type, value);
+      addElementPath(parentElement, (ElementKeyPath)childPath, paths.subList(1, paths.size()), type, value);
     }
   }
 
-  private static void addArrayPath(JsonElement parentElement, ArrayPath childPath, List<TuplePath> tailPaths, ValueType type, String value) {
+  private static void addArrayPath(JsonElement parentElement, ArrayKeyPath childPath, List<KeyPath> tailPaths, ValueType type, String value) {
     Optional<String> childName = childPath.getName();
     Optional<Integer> childIndex = childPath.getListIndex();
     Optional<Integer> childSize = childPath.getListSize();
@@ -187,7 +187,7 @@ public final class JsonKiwiHelper {
     }
   }
 
-  private static void addElementPath(JsonElement parentElement, ElementPath childPath, List<TuplePath> tailPaths, ValueType type, String value) {
+  private static void addElementPath(JsonElement parentElement, ElementKeyPath childPath, List<KeyPath> tailPaths, ValueType type, String value) {
     // parent element must be an object because it has an element path
     Preconditions.checkState(parentElement.isJsonObject());
     // child path must have a name because it is an element path
@@ -202,8 +202,8 @@ public final class JsonKiwiHelper {
     }
   }
 
-  private static void addElementChildPathToParentObject(JsonObject parentObject, String childPathName, List<TuplePath> tailPaths, ValueType type, String value) {
-    TuplePath nextChildPath = tailPaths.get(0);
+  private static void addElementChildPathToParentObject(JsonObject parentObject, String childPathName, List<KeyPath> tailPaths, ValueType type, String value) {
+    KeyPath nextChildPath = tailPaths.get(0);
     final JsonElement childElement;
     if (!parentObject.has(childPathName)) {
       // current child must be an object because it is an element path
@@ -217,8 +217,8 @@ public final class JsonKiwiHelper {
     processTuple(childElement, tailPaths, type, value);
   }
 
-  private static void addChildPathToParentArray(JsonArray parentArray, int childPathIndex, List<TuplePath> tailPaths, ValueType type, String value) {
-    TuplePath nextChildPath = tailPaths.get(0);
+  private static void addChildPathToParentArray(JsonArray parentArray, int childPathIndex, List<KeyPath> tailPaths, ValueType type, String value) {
+    KeyPath nextChildPath = tailPaths.get(0);
     final JsonElement childElement;
     if (parentArray.size() <= childPathIndex) {
       if (nextChildPath.getName().isPresent() || !nextChildPath.isArray()) {

@@ -4,15 +4,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Tuple path for json array elements.
+ * Key path (json key) for json array elements.
  */
-public class ArrayPath implements TuplePath {
+public class ArrayKeyPath implements KeyPath {
 
   private final Optional<String> name;
   private final int index;
   private final int size;
 
-  public ArrayPath(Optional<String> name, int index, int size) {
+  public ArrayKeyPath(Optional<String> name, int index, int size) {
     this.name = name;
     this.index = index;
     this.size = size;
@@ -53,11 +53,11 @@ public class ArrayPath implements TuplePath {
     if (this == other) {
       return true;
     }
-    if (!(other instanceof ArrayPath)) {
+    if (!(other instanceof ArrayKeyPath)) {
       return false;
     }
 
-    ArrayPath that = (ArrayPath)other;
+    ArrayKeyPath that = (ArrayKeyPath)other;
     return Objects.equals(this.name, that.name) &&
         this.index == that.index &&
         this.size == that.size;

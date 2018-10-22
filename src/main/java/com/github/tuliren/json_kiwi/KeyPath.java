@@ -3,9 +3,9 @@ package com.github.tuliren.json_kiwi;
 import java.util.Optional;
 
 /**
- * Json tuple path. This serves as the key in a json key value pair.
+ * Json key. It is named path because it is usually a sequence of keys (for nested elements).
  */
-public interface TuplePath {
+public interface KeyPath {
 
   Optional<String> getName();
 

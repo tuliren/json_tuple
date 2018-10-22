@@ -8,18 +8,18 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 
 /**
- * A type represents a json key value pair.
+ * Json key value pair.
  */
 public class JsonTuple {
 
   // key
-  private final List<TuplePath> paths;
+  private final List<KeyPath> paths;
   // value type
   private final ValueType type;
   // value
   private final String value;
 
-  private JsonTuple(List<TuplePath> paths, ValueType type, String value) {
+  private JsonTuple(List<KeyPath> paths, ValueType type, String value) {
     Preconditions.checkArgument(!paths.isEmpty(), "Value path cannot be empty: " + value);
     this.paths = paths;
     this.type = type;
@@ -29,9 +29,9 @@ public class JsonTuple {
   public static JsonTuple create(String fullPath, ValueType type, String value) {
     Preconditions.checkArgument(type.category == ValueType.Category.JSON);
 
-    List<TuplePath> paths = Lists.newLinkedList();
+    List<KeyPath> paths = Lists.newLinkedList();
     for (String path : fullPath.split(Pattern.quote(Constants.PATH_SEPARATOR))) {
-      paths.add(TuplePaths.create(path));
+      paths.add(KeyPaths.create(path));
     }
 
     switch (type) {
@@ -50,23 +50,23 @@ public class JsonTuple {
     }
   }
 
-  static JsonTuple createString(List<TuplePath> paths, String value) {
+  static JsonTuple createString(List<KeyPath> paths, String value) {
     return new JsonTuple(paths, ValueType.JSON_STRING, value);
   }
 
-  static JsonTuple createBoolean(List<TuplePath> paths, String value) {
+  static JsonTuple createBoolean(List<KeyPath> paths, String value) {
     return new JsonTuple(paths, ValueType.JSON_BOOLEAN, value);
   }
 
-  static JsonTuple createNumber(List<TuplePath> paths, String value) {
+  static JsonTuple createNumber(List<KeyPath> paths, String value) {
     return new JsonTuple(paths, ValueType.JSON_NUMBER, value);
   }
 
-  static JsonTuple createNull(List<TuplePath> paths) {
+  static JsonTuple createNull(List<KeyPath> paths) {
     return new JsonTuple(paths, ValueType.JSON_NULL, null);
   }
 
-  static JsonTuple createEmpty(List<TuplePath> paths) {
+  static JsonTuple createEmpty(List<KeyPath> paths) {
     return new JsonTuple(paths, ValueType.JSON_EMPTY, null);
   }
 
@@ -74,7 +74,7 @@ public class JsonTuple {
     return Joiner.on(Constants.PATH_SEPARATOR).join(paths);
   }
 
-  public List<TuplePath> getPaths() {
+  public List<KeyPath> getPaths() {
     return paths;
   }
 

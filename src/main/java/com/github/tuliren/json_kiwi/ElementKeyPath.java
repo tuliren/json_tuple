@@ -4,13 +4,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Tuple path for json non-array elements.
+ * Key path for json non-array elements.
  */
-public class ElementPath implements TuplePath {
+public class ElementKeyPath implements KeyPath {
 
   private final String name;
 
-  public ElementPath(String name) {
+  public ElementKeyPath(String name) {
     this.name = name;
   }
 
@@ -49,10 +49,10 @@ public class ElementPath implements TuplePath {
     if (this == other) {
       return true;
     }
-    if (!(other instanceof ElementPath)) {
+    if (!(other instanceof ElementKeyPath)) {
       return false;
     }
-    return Objects.equals(this.name, ((ElementPath)other).name);
+    return Objects.equals(this.name, ((ElementKeyPath)other).name);
   }
 
 }
