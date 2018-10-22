@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>tuliren</groupId>
-  <artifactId>json_db_lib</artifactId>
+  <groupId>com.github.tuliren</groupId>
+  <artifactId>json_kiwi</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
@@ -11,9 +11,9 @@
   </properties>
 
   <scm>
-    <connection>scm:git:git@github.com:tuliren/json_db_lib.git</connection>
-    <url>scm:git:git@github.com:tuliren/json_db_lib.git</url>
-    <developerConnection>scm:git:git@github.com:tuliren/json_db_lib.git</developerConnection>
+    <connection>scm:git:git@github.com:tuliren/json_kiwi.git</connection>
+    <url>scm:git:git@github.com:tuliren/json_kiwi.git</url>
+    <developerConnection>scm:git:git@github.com:tuliren/json_kiwi.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 

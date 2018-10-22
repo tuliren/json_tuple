@@ -1,4 +1,4 @@
-package tuliren.json_db_lib;
+package com.github.tuliren.json_kiwi;
 
 public enum ValueType {
   JSON_STRING(Category.JSON, 100),

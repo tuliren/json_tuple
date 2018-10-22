@@ -1,6 +1,7 @@
-Json DB Lib
+Json Kiwi
 ===
 
-[![Build Status](https://travis-ci.org/tuliren/json_db_lib.svg?branch=master)](https://travis-ci.org/tuliren/json_db_lib)
+[![Build Status](https://travis-ci.org/tuliren/json_kiwi.svg?branch=master)](https://travis-ci.org/tuliren/json_kiwi)
 
-The json database helper converts json objects from and to database tuples. In this way, json objects can be stored in SQL database.
+## Overview
+Json Kiwi is a json tool that converts json objects from and to key value pairs ("kv", a.k.a. "kiwi").

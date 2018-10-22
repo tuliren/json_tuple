@@ -1,4 +1,4 @@
-package tuliren.json_db_lib;
+package com.github.tuliren.json_kiwi;
 
 import java.util.List;
 
