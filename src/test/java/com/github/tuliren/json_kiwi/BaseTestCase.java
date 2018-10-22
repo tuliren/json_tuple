@@ -1,6 +1,6 @@
 package com.github.tuliren.json_kiwi;
 
-public class BaseJsonTestCase {
+public class BaseTestCase {
 
   static final String ELEMENT_PATH_NAME = "test_element_path_name";
   static final String ARRAY_PATH_NAME = "test_array_path_name";

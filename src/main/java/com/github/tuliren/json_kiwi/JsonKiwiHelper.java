@@ -14,21 +14,33 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
-public final class JsonDbHelper {
+/**
+ * Json helper that converts json objects {@link JsonObject} from and to key value pairs ({@link JsonTuple}).
+ * <p>
+ * To convert json object to tuples, use {@link JsonKiwiHelper#toTupleList}.
+ * To convert json tuples to object, use {@link JsonKiwiHelper#fromTupleList}.
+ */
+public final class JsonKiwiHelper {
 
-  private JsonDbHelper() {
+  private JsonKiwiHelper() {
   }
 
-  public static List<JsonDbTuple> toTupleList(JsonObject json) {
+  /**
+   * @return a list of {@link JsonTuple} representing the input {@param json}.
+   */
+  public static List<JsonTuple> toTupleList(JsonObject json) {
     return toTupleList(Collections.emptyList(), json);
   }
 
-  public static List<JsonDbTuple> toTupleList(List<TuplePath> parentPaths, JsonObject json) {
-    List<JsonDbTuple> tuples = Lists.newArrayList();
+  /**
+   * @return a list of {@link JsonTuple} representing the input {@param json} under {@param parentPaths}.
+   */
+  public static List<JsonTuple> toTupleList(List<TuplePath> parentPaths, JsonObject json) {
+    List<JsonTuple> tuples = Lists.newArrayList();
 
     Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
     if (entrySet.size() == 0) {
-      tuples.add(JsonDbTuple.createEmpty(parentPaths));
+      tuples.add(JsonTuple.createEmpty(parentPaths));
     }
 
     for (Map.Entry<String, JsonElement> entry : entrySet) {
@@ -47,7 +59,7 @@ public final class JsonDbHelper {
       } else if (jsonElement.isJsonObject()) {
         tuples.addAll(toTupleList(childPaths, jsonElement.getAsJsonObject()));
       } else if (jsonElement.isJsonNull()) {
-        tuples.add(JsonDbTuple.createNull(childPaths));
+        tuples.add(JsonTuple.createNull(childPaths));
       } else {
         throw new IllegalArgumentException("Unexpected json element: " + jsonElement);
       }
@@ -56,14 +68,14 @@ public final class JsonDbHelper {
     return tuples;
   }
 
-  private static List<JsonDbTuple> getTupleListFromArray(List<TuplePath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
-    List<JsonDbTuple> tuples = Lists.newArrayListWithCapacity(jsonArray.size());
+  private static List<JsonTuple> getTupleListFromArray(List<TuplePath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
+    List<JsonTuple> tuples = Lists.newArrayListWithCapacity(jsonArray.size());
     int size = jsonArray.size();
 
     if (size == 0) {
       List<TuplePath> childPaths = Lists.newArrayList(parentPaths);
       childPaths.add(new ArrayPath(arrayName, 0, 0));
-      tuples.add(JsonDbTuple.createEmpty(childPaths));
+      tuples.add(JsonTuple.createEmpty(childPaths));
     }
 
     for (int i = 0; i < jsonArray.size(); i++) {
@@ -80,7 +92,7 @@ public final class JsonDbHelper {
       } else if (jsonElement.isJsonObject()) {
         tuples.addAll(toTupleList(childPaths, jsonElement.getAsJsonObject()));
       } else if (jsonElement.isJsonNull()) {
-        tuples.add(JsonDbTuple.createNull(childPaths));
+        tuples.add(JsonTuple.createNull(childPaths));
       } else {
         throw new IllegalArgumentException("Unexpected json element: " + jsonElement);
       }
@@ -89,19 +101,22 @@ public final class JsonDbHelper {
     return tuples;
   }
 
-  private static JsonDbTuple createPrimitiveTuple(List<TuplePath> childPaths, JsonPrimitive jsonPrimitive) {
+  private static JsonTuple createPrimitiveTuple(List<TuplePath> childPaths, JsonPrimitive jsonPrimitive) {
     if (jsonPrimitive.isBoolean()) {
-      return JsonDbTuple.createBoolean(childPaths, jsonPrimitive.getAsString());
+      return JsonTuple.createBoolean(childPaths, jsonPrimitive.getAsString());
     } else if (jsonPrimitive.isNumber()) {
-      return JsonDbTuple.createNumber(childPaths, jsonPrimitive.getAsString());
+      return JsonTuple.createNumber(childPaths, jsonPrimitive.getAsString());
     } else {
-      return JsonDbTuple.createString(childPaths, jsonPrimitive.getAsString());
+      return JsonTuple.createString(childPaths, jsonPrimitive.getAsString());
     }
   }
 
-  public static JsonObject fromTupleList(List<JsonDbTuple> tuples) {
+  /**
+   * @return a json object from input {@param tuples}.
+   */
+  public static JsonObject fromTupleList(List<JsonTuple> tuples) {
     JsonObject json = new JsonObject();
-    for (JsonDbTuple tuple : tuples) {
+    for (JsonTuple tuple : tuples) {
       processTuple(json, tuple.getPaths(), tuple.getType(), tuple.getValue());
     }
     return json;

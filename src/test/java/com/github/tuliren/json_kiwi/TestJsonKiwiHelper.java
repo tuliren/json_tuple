@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestJsonDbHelper extends BaseJsonTestCase {
+public class TestJsonKiwiHelper extends BaseTestCase {
 
   private final JsonParser parser = new JsonParser();
   private String jsonString;
@@ -17,8 +17,8 @@ public class TestJsonDbHelper extends BaseJsonTestCase {
   private void testJson() throws Exception {
     Preconditions.checkNotNull(jsonString);
     JsonObject expected = parser.parse(jsonString).getAsJsonObject();
-    List<JsonDbTuple> jsonDbTuples = JsonDbHelper.toTupleList(expected);
-    JsonObject actual = JsonDbHelper.fromTupleList(jsonDbTuples);
+    List<JsonTuple> jsonDbTuples = JsonKiwiHelper.toTupleList(expected);
+    JsonObject actual = JsonKiwiHelper.fromTupleList(jsonDbTuples);
     Assert.assertEquals(expected, actual);
     // the number of tuples equal to the number of comma + 1
     Assert.assertEquals(StringUtils.countMatches(jsonString, ",") + 1, jsonDbTuples.size());

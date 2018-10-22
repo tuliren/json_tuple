@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class TestTuplePaths extends BaseJsonTestCase {
+public class TestTuplePaths extends BaseTestCase {
 
   @Test
   public void testElementPath() throws Exception {

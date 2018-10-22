@@ -3,6 +3,9 @@ package com.github.tuliren.json_kiwi;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Tuple path for json non-array elements.
+ */
 public class ElementPath implements TuplePath {
 
   private final String name;

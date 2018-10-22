@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestElementPath extends BaseJsonTestCase {
+public class TestElementPath extends BaseTestCase {
 
   @Test
   public void testElementPath() throws Exception {

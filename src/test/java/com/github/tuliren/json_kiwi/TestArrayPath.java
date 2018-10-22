@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
-public class TestArrayPath extends BaseJsonTestCase {
+public class TestArrayPath extends BaseTestCase {
 
   @Test
   public void testArrayPath() throws Exception {

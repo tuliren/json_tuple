@@ -3,6 +3,9 @@ package com.github.tuliren.json_kiwi;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Tuple path for json array elements.
+ */
 public class ArrayPath implements TuplePath {
 
   private final Optional<String> name;
@@ -37,7 +40,7 @@ public class ArrayPath implements TuplePath {
 
   @Override
   public String toString() {
-    return String.format("%s%s%d%s%d", name.orElse(JsonDbConstants.KEYLESS_ARRAY_NAME), JsonDbConstants.LIST_PATH_SEPARATOR, index, JsonDbConstants.LIST_PATH_SEPARATOR, size);
+    return String.format("%s%s%d%s%d", name.orElse(Constants.KEYLESS_ARRAY_NAME), Constants.LIST_PATH_SEPARATOR, index, Constants.LIST_PATH_SEPARATOR, size);
   }
 
   @Override
