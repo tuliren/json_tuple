@@ -1,4 +1,4 @@
-package com.github.tuliren.json_kiwi;
+package com.github.tuliren.json_tuple;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestJsonKiwiHelper extends BaseTestCase {
+public class TestJsonTuples extends BaseTestCase {
 
   private final JsonParser parser = new JsonParser();
   private String jsonString;
@@ -17,8 +17,8 @@ public class TestJsonKiwiHelper extends BaseTestCase {
   private void testJson() throws Exception {
     Preconditions.checkNotNull(jsonString);
     JsonObject expected = parser.parse(jsonString).getAsJsonObject();
-    List<JsonTuple> jsonTuples = JsonKiwiHelper.toTupleList(expected);
-    JsonObject actual = JsonKiwiHelper.fromTupleList(jsonTuples);
+    List<JsonTuple> jsonTuples = JsonTuples.toTupleList(expected);
+    JsonObject actual = JsonTuples.fromTupleList(jsonTuples);
     Assert.assertEquals(expected, actual);
     // the number of tuples equal to the number of comma + 1
     Assert.assertEquals(StringUtils.countMatches(jsonString, ",") + 1, jsonTuples.size());

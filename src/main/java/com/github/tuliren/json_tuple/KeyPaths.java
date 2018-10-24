@@ -1,4 +1,4 @@
-package com.github.tuliren.json_kiwi;
+package com.github.tuliren.json_tuple;
 
 import java.util.Optional;
 import java.util.regex.Pattern;

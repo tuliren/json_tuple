@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.tuliren</groupId>
-  <artifactId>json_kiwi</artifactId>
+  <artifactId>json_tuple</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
@@ -11,9 +11,9 @@
   </properties>
 
   <scm>
-    <connection>scm:git:git@github.com:tuliren/json_kiwi.git</connection>
-    <url>scm:git:git@github.com:tuliren/json_kiwi.git</url>
-    <developerConnection>scm:git:git@github.com:tuliren/json_kiwi.git</developerConnection>
+    <connection>scm:git:git@github.com:tuliren/json_tuple.git</connection>
+    <url>scm:git:git@github.com:tuliren/json_tuple.git</url>
+    <developerConnection>scm:git:git@github.com:tuliren/json_tuple.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 

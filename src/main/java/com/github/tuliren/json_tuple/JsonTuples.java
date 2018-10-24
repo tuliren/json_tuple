@@ -1,4 +1,4 @@
-package com.github.tuliren.json_kiwi;
+package com.github.tuliren.json_tuple;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,12 +17,12 @@ import com.google.gson.JsonPrimitive;
 /**
  * Json helper that converts json objects {@link JsonObject} from and to key value tuple ({@link JsonTuple}).
  * <p>
- * To convert json object to tuples, use {@link JsonKiwiHelper#toTupleList}.
- * To convert json tuples to object, use {@link JsonKiwiHelper#fromTupleList}.
+ * To convert json object to tuples, use {@link JsonTuples#toTupleList}.
+ * To convert json tuples to object, use {@link JsonTuples#fromTupleList}.
  */
-public final class JsonKiwiHelper {
+public final class JsonTuples {
 
-  private JsonKiwiHelper() {
+  private JsonTuples() {
   }
 
   /**
