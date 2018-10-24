@@ -25,14 +25,14 @@ public final class JsonTuples {
   }
 
   /**
-   * @return a list of {@link JsonTuple} representing the input {@param json}.
+   * @return a list of {@link JsonTuple} representing the input {@code json}.
    */
   public static List<JsonTuple> toTupleList(JsonObject json) {
     return toTupleList(Collections.emptyList(), json);
   }
 
   /**
-   * @return a list of {@link JsonTuple} representing the input {@param json} under {@param parentPaths}.
+   * @return a list of {@link JsonTuple} representing the input {@code json} under {@code parentPaths}.
    */
   public static List<JsonTuple> toTupleList(List<KeyPath> parentPaths, JsonObject json) {
     List<JsonTuple> tuples = new ArrayList<>();
@@ -111,7 +111,7 @@ public final class JsonTuples {
   }
 
   /**
-   * @return a json object from input {@param tuples}.
+   * @return a json object from input {@code tuples}.
    */
   public static JsonObject fromTupleList(List<JsonTuple> tuples) {
     JsonObject json = new JsonObject();
