@@ -28,7 +28,7 @@ Each json key value pair is converted to a [`JsonTuple`](https://github.com/tuli
 ### Basic Element
 
 A simple and flat json object will be resolved to the following key value pairs:
-```json
+```java
 {
   "k1": "string",
   "k2": 10,
@@ -90,7 +90,13 @@ Elements in a json array have even more complicated keys. It is wrapped in [`Arr
 
 ```json
 {
-  "array": [1, 2.5, true, "string", [100, 200]]
+  "key": [
+      1,
+      2.5,
+      true,
+      "string",
+      [100, 200]
+  ]
 }
 ```
 
@@ -103,7 +109,7 @@ Tuple | Key | Value | Value Type
 5 | "key\|4\|5.\|0\|2" | 100 | JSON_NUMBER
 6 | "key\|4\|5.\|1\|2" | 200 | JSON_NUMBER
 
-The array key path is composed of three parts: array name, index, and size. Each part is separated by `|`. Nested array may not have a name, in that case the array name is empty. That's why the key for tuple 5 is `key|4|5.|1|2`. In this path, `key|4|5` is its parent key. `|0|2` is the nameless array element key, meaning that is the `0` element in an array of size `2`. The two keys are joined with a `.`.
+The array key path is composed of three parts: array name, index, and size. Each part is separated by `|`. Nested array may not have a name, in that case the array name is empty. That's why the key for tuple 5 is `key|4|5.|1|2`. In this path, `key|4|5` is its parent key. `|0|2` is the nameless array element key, meaning that it is the `0` element in an array of size `2`. The two keys are joined with a `.`.
 
 ### More Examples
 For more examples, please see [`TestJsonTuples`](https://github.com/tuliren/json_tuple/blob/master/src/test/java/com/github/tuliren/json_tuple/TestJsonTuples.java).
