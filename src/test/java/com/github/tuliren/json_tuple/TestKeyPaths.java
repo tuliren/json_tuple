@@ -10,25 +10,25 @@ import static org.junit.Assert.assertTrue;
 public class TestKeyPaths extends BaseTestCase {
 
   @Test
-  public void testElementPath() throws Exception {
+  public void testElementPath() {
     ElementKeyPath path = new ElementKeyPath(ELEMENT_PATH_NAME);
     assertEquals(path, KeyPaths.create(path.toString()));
   }
 
   @Test
-  public void testArrayPath() throws Exception {
+  public void testArrayPath() {
     ArrayKeyPath path = new ArrayKeyPath(Optional.of(ARRAY_PATH_NAME), 0, 3);
     assertEquals(path, KeyPaths.create(path.toString()));
   }
 
   @Test
-  public void testKeylessArrayPath() throws Exception {
+  public void testKeylessArrayPath() {
     ArrayKeyPath path = new ArrayKeyPath(Optional.empty(), 0, 3);
     assertEquals(path, KeyPaths.create(path.toString()));
   }
 
   @Test
-  public void testPathCreationFromString() throws Exception {
+  public void testPathCreationFromString() {
     // element path
     assertTrue(KeyPaths.create("array") instanceof ElementKeyPath);
     assertTrue(KeyPaths.create("") instanceof ElementKeyPath);

@@ -13,7 +13,7 @@ public class TestJsonTuples extends BaseTestCase {
   private final JsonParser parser = new JsonParser();
   private String jsonString;
 
-  private void testJson() throws Exception {
+  private void testJson() {
     if (jsonString == null) {
       throw new NullPointerException("Testing json string is null");
     }
@@ -27,31 +27,31 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testString() throws Exception {
+  public void testString() {
     jsonString = "{key: \"string\"}";
     testJson();
   }
 
   @Test
-  public void testLong() throws Exception {
+  public void testLong() {
     jsonString = "{k1: 1, k2: 2}";
     testJson();
   }
 
   @Test
-  public void testDouble() throws Exception {
+  public void testDouble() {
     jsonString = "{k1: 1.1, k2: 2.2, k3: 3.33333}";
     testJson();
   }
 
   @Test
-  public void testBoolean() throws Exception {
+  public void testBoolean() {
     jsonString = "{k1: true, k2: false, k3: true}";
     testJson();
   }
 
   @Test
-  public void testEmptyString() throws Exception {
+  public void testEmptyString() {
     jsonString = "{key: \"\"}";
     testJson();
 
@@ -60,7 +60,7 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testNullString() throws Exception {
+  public void testNullString() {
     jsonString = "{key: \"null\"}";
     testJson();
 
@@ -69,7 +69,7 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testNull() throws Exception {
+  public void testNull() {
     jsonString = "{key: null}";
     testJson();
 
@@ -78,19 +78,19 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testNullKey() throws Exception {
+  public void testNullKey() {
     jsonString = "{null: value}";
     testJson();
   }
 
   @Test
-  public void testNullStringKey() throws Exception {
+  public void testNullStringKey() {
     jsonString = "{\"null\": value}";
     testJson();
   }
 
   @Test
-  public void testEmptyKey() throws Exception {
+  public void testEmptyKey() {
     jsonString = "{\"\": value}";
     testJson();
 
@@ -99,19 +99,19 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testEmptyArray() throws Exception {
+  public void testEmptyArray() {
     jsonString = "{key: []}";
     testJson();
   }
 
   @Test
-  public void testEmptyObject() throws Exception {
+  public void testEmptyObject() {
     jsonString = "{key: {}}";
     testJson();
   }
 
   @Test
-  public void testEmptyObjectInArray() throws Exception {
+  public void testEmptyObjectInArray() {
     jsonString = "{key: [{}]}";
     testJson();
 
@@ -129,19 +129,19 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testSimpleObject() throws Exception {
+  public void testSimpleObject() {
     jsonString = "{object: {k1: v1}, str: value, n1: 1, n2: 2.2, b1: true, b2: false}";
     testJson();
   }
 
   @Test
-  public void testSimpleArray() throws Exception {
+  public void testSimpleArray() {
     jsonString = "{key: [1.1, 2.2, str, true, false]}";
     testJson();
   }
 
   @Test
-  public void testArrayInArray() throws Exception {
+  public void testArrayInArray() {
     jsonString = "{key: [[1, 2, 3], [4, 5, 6], 1, 2.2, string, true, false]}";
     testJson();
 
@@ -156,7 +156,7 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testObjectInObject() throws Exception {
+  public void testObjectInObject() {
     jsonString = "{key: {key: {key: {key: {key: value}}}}}";
     testJson();
 
@@ -165,7 +165,7 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testObjectInArray() throws Exception {
+  public void testObjectInArray() {
     jsonString = "{key: [{l1: v1}, {l2: v2}]}";
     testJson();
 
@@ -174,7 +174,7 @@ public class TestJsonTuples extends BaseTestCase {
   }
 
   @Test
-  public void testComplexObject() throws Exception {
+  public void testComplexObject() {
     jsonString = COMPLEX_JSON_STRING;
     testJson();
   }
