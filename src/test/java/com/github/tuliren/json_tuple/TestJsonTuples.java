@@ -2,7 +2,6 @@ package com.github.tuliren.json_tuple;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +14,9 @@ public class TestJsonTuples extends BaseTestCase {
   private String jsonString;
 
   private void testJson() throws Exception {
-    Preconditions.checkNotNull(jsonString);
+    if (jsonString == null) {
+      throw new NullPointerException("Testing json string is null");
+    }
     JsonObject expected = parser.parse(jsonString).getAsJsonObject();
     List<JsonTuple> jsonTuples = JsonTuples.toTupleList(expected);
     JsonObject actual = JsonTuples.fromTupleList(jsonTuples);

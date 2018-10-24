@@ -1,13 +1,12 @@
 package com.github.tuliren.json_tuple;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
@@ -36,7 +35,7 @@ public final class JsonTuples {
    * @return a list of {@link JsonTuple} representing the input {@param json} under {@param parentPaths}.
    */
   public static List<JsonTuple> toTupleList(List<KeyPath> parentPaths, JsonObject json) {
-    List<JsonTuple> tuples = Lists.newArrayList();
+    List<JsonTuple> tuples = new ArrayList<>();
 
     Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
     if (entrySet.size() == 0) {
@@ -44,7 +43,7 @@ public final class JsonTuples {
     }
 
     for (Map.Entry<String, JsonElement> entry : entrySet) {
-      List<KeyPath> childPaths = Lists.newArrayList(parentPaths);
+      List<KeyPath> childPaths = new ArrayList<>(parentPaths);
       String key = entry.getKey();
       JsonElement jsonElement = entry.getValue();
 
@@ -69,17 +68,17 @@ public final class JsonTuples {
   }
 
   private static List<JsonTuple> getTupleListFromArray(List<KeyPath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
-    List<JsonTuple> tuples = Lists.newArrayListWithCapacity(jsonArray.size());
+    List<JsonTuple> tuples = new ArrayList<>(jsonArray.size());
     int size = jsonArray.size();
 
     if (size == 0) {
-      List<KeyPath> childPaths = Lists.newArrayList(parentPaths);
+      List<KeyPath> childPaths = new ArrayList<>(parentPaths);
       childPaths.add(new ArrayKeyPath(arrayName, 0, 0));
       tuples.add(JsonTuple.createEmpty(childPaths));
     }
 
     for (int i = 0; i < jsonArray.size(); i++) {
-      List<KeyPath> childPaths = Lists.newArrayList(parentPaths);
+      List<KeyPath> childPaths = new ArrayList<>(parentPaths);
       childPaths.add(new ArrayKeyPath(arrayName, i, size));
 
       JsonElement jsonElement = jsonArray.get(i);
@@ -123,7 +122,7 @@ public final class JsonTuples {
   }
 
   private static void processTuple(JsonElement parentElement, List<KeyPath> paths, ValueType type, String value) {
-    Preconditions.checkArgument(!paths.isEmpty());
+    checkArgument(!paths.isEmpty());
     KeyPath childPath = paths.get(0);
     if (childPath.isArray()) {
       addArrayPath(parentElement, (ArrayKeyPath)childPath, paths.subList(1, paths.size()), type, value);
@@ -136,13 +135,13 @@ public final class JsonTuples {
     Optional<String> childName = childPath.getName();
     Optional<Integer> childIndex = childPath.getListIndex();
     Optional<Integer> childSize = childPath.getListSize();
-    Preconditions.checkState(childIndex.isPresent());
-    Preconditions.checkState(childSize.isPresent());
+    checkState(childIndex.isPresent());
+    checkState(childSize.isPresent());
 
     if (childName.isPresent()) {
       // when the child has a name, the parent must be an object
       String name = childName.get();
-      Preconditions.checkState(parentElement.isJsonObject());
+      checkState(parentElement.isJsonObject());
 
       JsonObject parentObject = parentElement.getAsJsonObject();
       final JsonArray childArray;
@@ -158,7 +157,7 @@ public final class JsonTuples {
         addChildPathToParentArray(childArray, childIndex.get(), tailPaths, type, value);
       } else {
         // tuples are sorted by name, and this element must have not been added to the array
-        Preconditions.checkState(childArray.size() == childIndex.get());
+        checkState(childArray.size() == childIndex.get());
         if (type != ValueType.JSON_EMPTY) {
           childArray.add(getJsonElement(type, value));
         } else if (childSize.get() == 0) {
@@ -172,14 +171,14 @@ public final class JsonTuples {
       }
     } else {
       // when the child has no name, the parent must be an array
-      Preconditions.checkState(parentElement.isJsonArray());
+      checkState(parentElement.isJsonArray());
       JsonArray parentArray = parentElement.getAsJsonArray();
 
       if (!tailPaths.isEmpty()) {
         addChildPathToParentArray(parentArray, childIndex.get(), tailPaths, type, value);
       } else {
         // tuples are sorted by name, and this element must have not been added to the array
-        Preconditions.checkState(parentArray.size() == childIndex.get());
+        checkState(parentArray.size() == childIndex.get());
         if (type != ValueType.JSON_EMPTY) {
           parentArray.add(getJsonElement(type, value));
         }
@@ -189,10 +188,10 @@ public final class JsonTuples {
 
   private static void addElementPath(JsonElement parentElement, ElementKeyPath childPath, List<KeyPath> tailPaths, ValueType type, String value) {
     // parent element must be an object because it has an element path
-    Preconditions.checkState(parentElement.isJsonObject());
+    checkState(parentElement.isJsonObject());
     // child path must have a name because it is an element path
     Optional<String> childName = childPath.getName();
-    Preconditions.checkState(childName.isPresent());
+    checkState(childName.isPresent());
 
     final JsonObject parentObject = parentElement.getAsJsonObject();
     if (!tailPaths.isEmpty()) {
@@ -209,7 +208,7 @@ public final class JsonTuples {
       // current child must be an object because it is an element path
       childElement = new JsonObject();
       // next child must have a name because the current child is an object
-      Preconditions.checkArgument(nextChildPath.getName().isPresent());
+      checkArgument(nextChildPath.getName().isPresent());
       parentObject.add(childPathName, childElement);
     } else {
       childElement = parentObject.get(childPathName);
@@ -255,6 +254,18 @@ public final class JsonTuples {
         return new JsonObject();
       default:
         throw new IllegalArgumentException("Unexpected value type: " + type.name());
+    }
+  }
+
+  private static void checkArgument(boolean expression) {
+    if (!expression) {
+      throw new IllegalArgumentException();
+    }
+  }
+
+  private static void checkState(boolean expression) {
+    if (!expression) {
+      throw new IllegalStateException();
     }
   }
 

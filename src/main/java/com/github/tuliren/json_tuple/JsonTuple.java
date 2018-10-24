@@ -1,11 +1,10 @@
 package com.github.tuliren.json_tuple;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Json key value pair.
@@ -20,16 +19,20 @@ public class JsonTuple {
   private final String value;
 
   private JsonTuple(List<KeyPath> paths, ValueType type, String value) {
-    Preconditions.checkArgument(!paths.isEmpty(), "Value path cannot be empty: " + value);
+    if (paths.isEmpty()) {
+      throw new IllegalArgumentException("Value path cannot be empty: " + value);
+    }
     this.paths = paths;
     this.type = type;
     this.value = value;
   }
 
   public static JsonTuple create(String fullPath, ValueType type, String value) {
-    Preconditions.checkArgument(type.category == ValueType.Category.JSON);
+    if (type.category != ValueType.Category.JSON) {
+      throw new IllegalArgumentException("JSON value type is expected, but the actual type is: " + type.name());
+    }
 
-    List<KeyPath> paths = Lists.newLinkedList();
+    List<KeyPath> paths = new LinkedList<>();
     for (String path : fullPath.split(Pattern.quote(Constants.PATH_SEPARATOR))) {
       paths.add(KeyPaths.create(path));
     }
@@ -71,7 +74,7 @@ public class JsonTuple {
   }
 
   public String getFullPaths() {
-    return Joiner.on(Constants.PATH_SEPARATOR).join(paths);
+    return StringUtils.join(paths, Constants.PATH_SEPARATOR);
   }
 
   public List<KeyPath> getPaths() {
