@@ -90,6 +90,28 @@ public class JsonTuple {
   }
 
   @Override
+  public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (!(other instanceof JsonTuple)) {
+      return false;
+    }
+    JsonTuple that = (JsonTuple)other;
+    return this.type == that.type &&
+        this.value.equals(that.value) &&
+        this.paths.equals(that.paths);
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = paths.hashCode();
+    hash += 19 * hash + type.hashCode();
+    hash += 19 * hash + value.hashCode();
+    return hash;
+  }
+
+  @Override
   public String toString() {
     return String.format("%s: %s-%s", getFullPaths(), type.name(), value);
   }

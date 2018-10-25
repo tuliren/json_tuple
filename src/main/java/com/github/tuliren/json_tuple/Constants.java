@@ -6,4 +6,7 @@ class Constants {
   static final String KEYLESS_ARRAY_NAME = "";
   static final String LIST_PATH_SEPARATOR = "|";
 
+  private Constants() {
+  }
+
 }

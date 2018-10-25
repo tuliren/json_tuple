@@ -16,6 +16,12 @@ public interface KeyPath {
   Optional<Integer> getListSize();
 
   @Override
+  boolean equals(Object that);
+
+  @Override
+  int hashCode();
+
+  @Override
   String toString();
 
 }
