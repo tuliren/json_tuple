@@ -8,6 +8,10 @@ import static org.junit.Assert.assertEquals;
 
 public class TestArrayKeyPath extends BaseTestCase {
 
+  private static final String ARRAY_PATH_NAME = "test_array_path_name";
+  private static final int ARRAY_INDEX = 1;
+  private static final int ARRAY_SIZE = 5;
+
   @Test
   public void testArrayPath() {
     KeyPath arrayPath = new ArrayKeyPath(Optional.of(ARRAY_PATH_NAME), ARRAY_INDEX, ARRAY_SIZE);
