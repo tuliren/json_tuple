@@ -37,7 +37,7 @@ public final class JsonTupleHelper {
   /**
    * @return a json object from input {@code tuples}.
    */
-  public static JsonObject fromTupleList(List<JsonTuple> tuples) {
+  public JsonObject fromTupleList(List<JsonTuple> tuples) {
     return JsonTupleConverter.fromTupleList(tuples);
   }
 

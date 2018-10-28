@@ -32,8 +32,7 @@ public class TestJsonTupleHelper extends BaseTestCase {
   private void testJson(JsonTupleHelper helper) {
     JsonObject expected = parser.parse(jsonString).getAsJsonObject();
     List<JsonTuple> jsonTuples = helper.toTupleList(expected);
-    System.out.println(jsonTuples);
-    JsonObject actual = JsonTupleHelper.fromTupleList(jsonTuples);
+    JsonObject actual = helper.fromTupleList(jsonTuples);
     Assert.assertEquals(expected, actual);
     // the number of tuples equal to the number of comma + 1
     Assert.assertEquals(StringUtils.countMatches(jsonString, ",") + 1, jsonTuples.size());
