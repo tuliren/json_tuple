@@ -16,25 +16,64 @@ import com.google.gson.JsonPrimitive;
 /**
  * Json helper that converts json objects {@link JsonObject} from and to key value tuple ({@link JsonTuple}).
  * <p>
- * To convert json object to tuples, use {@link JsonTuples#toTupleList}.
- * To convert json tuples to object, use {@link JsonTuples#fromTupleList}.
+ * To convert json object to tuples, use {@link JsonTupleHelper#toTupleList}.
+ * To convert json tuples to object, use {@link JsonTupleHelper#fromTupleList}.
  */
-public final class JsonTuples {
+public final class JsonTupleHelper {
 
-  private JsonTuples() {
+  private final String pathSeparator;
+  private final String keylessArrayName;
+  private final String listPathSeparator;
+
+  public static Builder create() {
+    return new Builder();
+  }
+
+  private JsonTupleHelper(String pathSeparator, String keylessArrayName, String listPathSeparator) {
+    this.pathSeparator = pathSeparator;
+    this.keylessArrayName = keylessArrayName;
+    this.listPathSeparator = listPathSeparator;
+  }
+
+  public static class Builder {
+    private String pathSeparator = Constants.PATH_SEPARATOR;
+    private String keylessArrayName = Constants.KEYLESS_ARRAY_NAME;
+    private String listPathSeparator = Constants.LIST_PATH_SEPARATOR;
+
+    private Builder() {
+    }
+
+    public Builder setPathSeparator(String pathSeparator) {
+      this.pathSeparator = pathSeparator;
+      return this;
+    }
+
+    public Builder setKeylessArrayName(String keylessArrayName) {
+      this.keylessArrayName = keylessArrayName;
+      return this;
+    }
+
+    public Builder setListPathSeparator(String listPathSeparator) {
+      this.listPathSeparator = listPathSeparator;
+      return this;
+    }
+
+    public JsonTupleHelper get() {
+      return new JsonTupleHelper(pathSeparator, keylessArrayName, listPathSeparator);
+    }
   }
 
   /**
    * @return a list of {@link JsonTuple} representing the input {@code json}.
    */
-  public static List<JsonTuple> toTupleList(JsonObject json) {
+  public List<JsonTuple> toTupleList(JsonObject json) {
     return toTupleList(Collections.emptyList(), json);
   }
 
   /**
    * @return a list of {@link JsonTuple} representing the input {@code json} under {@code parentPaths}.
    */
-  public static List<JsonTuple> toTupleList(List<KeyPath> parentPaths, JsonObject json) {
+  public List<JsonTuple> toTupleList(List<KeyPath> parentPaths, JsonObject json) {
     List<JsonTuple> tuples = new ArrayList<>();
 
     Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
@@ -67,7 +106,7 @@ public final class JsonTuples {
     return tuples;
   }
 
-  private static List<JsonTuple> getTupleListFromArray(List<KeyPath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
+  private List<JsonTuple> getTupleListFromArray(List<KeyPath> parentPaths, Optional<String> arrayName, JsonArray jsonArray) {
     List<JsonTuple> tuples = new ArrayList<>(jsonArray.size());
     int size = jsonArray.size();
 
