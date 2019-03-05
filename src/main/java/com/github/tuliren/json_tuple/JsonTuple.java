@@ -27,13 +27,13 @@ public class JsonTuple {
     this.value = value;
   }
 
-  public static JsonTuple create(String fullPath, ValueType type, String value) {
+  public static JsonTuple create(String fullPath, ValueType type, String value, String pathSeparator) {
     if (type.category != ValueType.Category.JSON) {
       throw new IllegalArgumentException("JSON value type is expected, but the actual type is: " + type.name());
     }
 
     List<KeyPath> paths = new LinkedList<>();
-    for (String path : fullPath.split(Pattern.quote(Constants.PATH_SEPARATOR))) {
+    for (String path : fullPath.split(Pattern.quote(pathSeparator))) {
       paths.add(KeyPaths.create(path));
     }
 
@@ -51,6 +51,10 @@ public class JsonTuple {
       default:
         throw new IllegalArgumentException("Unexpected json type: " + type.name());
     }
+  }
+
+  public static JsonTuple create(String fullPath, ValueType type, String value) {
+    return create(fullPath, type, value, Constants.PATH_SEPARATOR);
   }
 
   static JsonTuple createString(List<KeyPath> paths, String value) {
@@ -73,8 +77,12 @@ public class JsonTuple {
     return new JsonTuple(paths, ValueType.JSON_EMPTY, null);
   }
 
+  public String getFullPaths(String pathSeparator) {
+    return StringUtils.join(paths, pathSeparator);
+  }
+
   public String getFullPaths() {
-    return StringUtils.join(paths, Constants.PATH_SEPARATOR);
+    return getFullPaths(Constants.PATH_SEPARATOR);
   }
 
   public List<KeyPath> getPaths() {
@@ -111,9 +119,13 @@ public class JsonTuple {
     return hash;
   }
 
+  public String toString(String pathSeparator) {
+    return String.format("%s: %s-%s", getFullPaths(pathSeparator), type.name(), value);
+  }
+
   @Override
   public String toString() {
-    return String.format("%s: %s-%s", getFullPaths(), type.name(), value);
+    return toString(Constants.PATH_SEPARATOR);
   }
 
 }
