@@ -3,8 +3,6 @@ Json Tuple
 
 [![Build Status](https://github.com/tuliren/json_tuple/workflows/build/badge.svg)](https://github.com/tuliren/json_tuple/actions)
 
-[![Build Status](https://travis-ci.org/tuliren/json_tuple.svg?branch=master)](https://travis-ci.org/tuliren/json_tuple)
-
 ## Overview
 Json Tuple is a json tool that can **convert json objects from / to key value tuples**. This tool was originally created to parse and store json objects in database tables for [Jack](https://github.com/LiveRamp/jack).
 

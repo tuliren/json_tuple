@@ -1,6 +1,0 @@
-language: java
-jdk: openjdk8
-notifications:
-  email: false
-install:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true --batch-mode --quiet --show-version
