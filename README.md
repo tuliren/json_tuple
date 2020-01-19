@@ -1,7 +1,7 @@
 Json Tuple
 ===
 
-![Build Status](https://github.com/tuliren/json_tuple/workflows/build/badge.svg)
+[![Build Status](https://github.com/tuliren/json_tuple/workflows/build/badge.svg)](https://github.com/tuliren/json_tuple/actions)
 
 [![Build Status](https://travis-ci.org/tuliren/json_tuple.svg?branch=master)](https://travis-ci.org/tuliren/json_tuple)
 
