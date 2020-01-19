@@ -1,6 +1,8 @@
 Json Tuple
 ===
 
+![](https://github.com/actions/json_tuple/workflows/.github/workflows/maven.xml/badge.svg)
+
 [![Build Status](https://travis-ci.org/tuliren/json_tuple.svg?branch=master)](https://travis-ci.org/tuliren/json_tuple)
 
 ## Overview
