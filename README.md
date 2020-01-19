@@ -4,9 +4,11 @@ Json Tuple
 [![Build Status](https://github.com/tuliren/json_tuple/workflows/build/badge.svg)](https://github.com/tuliren/json_tuple/actions)
 
 ## Overview
+
 Json Tuple is a json tool that can **convert json objects from / to key value tuples**. This tool was originally created to parse and store json objects in database tables for [Jack](https://github.com/LiveRamp/jack).
 
 ## How to Use
+
 ```java
 JsonObject json1 = new JsonParser()
     .parse("{k1: v1, k2: [v1, v2, v3], ...}")
@@ -20,6 +22,24 @@ JsonObject json2 = JsonTuples.fromTuples(tuples);
 
 // json1 is equal to json2
 assert json1.equals(json2)
+```
+
+## How to Install
+
+Check the latest version [here](https://github.com/tuliren/json_tuple/packages/108692), and add this to `pom.xml`:
+
+```xml
+<dependency>
+  <groupId>dev.tuliren</groupId>
+  <artifactId>json_tuple</artifactId>
+  <version>1.0.0-snapshot</version>
+</dependency>
+```
+
+Run through command line:
+
+```sh
+mvn install
 ```
 
 ## How It Works
