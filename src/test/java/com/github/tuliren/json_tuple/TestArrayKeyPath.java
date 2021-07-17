@@ -8,7 +8,6 @@ import static org.junit.Assert.assertEquals;
 
 public class TestArrayKeyPath extends BaseTestCase {
 
-  private static final String ARRAY_PATH_NAME = "test_array_path_name";
   private static final int ARRAY_INDEX = 1;
   private static final int ARRAY_SIZE = 5;
 

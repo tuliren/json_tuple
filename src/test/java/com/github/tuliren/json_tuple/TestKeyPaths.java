@@ -9,9 +9,6 @@ import static org.junit.Assert.assertTrue;
 
 public class TestKeyPaths extends BaseTestCase {
 
-  private static final String ELEMENT_PATH_NAME = "test_element_path_name";
-  private static final String ARRAY_PATH_NAME = "test_array_path_name";
-
   @Test
   public void testElementPath() {
     ElementKeyPath path = new ElementKeyPath(ELEMENT_PATH_NAME);

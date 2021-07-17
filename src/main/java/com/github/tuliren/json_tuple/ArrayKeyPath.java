@@ -38,9 +38,13 @@ public class ArrayKeyPath implements KeyPath {
     return Optional.of(size);
   }
 
+  public String toString(String keylessArrayName, String listPathSeparator) {
+    return String.format("%s%s%d%s%d", name.orElse(keylessArrayName), listPathSeparator, index, listPathSeparator, size);
+  }
+
   @Override
   public String toString() {
-    return String.format("%s%s%d%s%d", name.orElse(Constants.KEYLESS_ARRAY_NAME), Constants.LIST_PATH_SEPARATOR, index, Constants.LIST_PATH_SEPARATOR, size);
+    return toString(Constants.KEYLESS_ARRAY_NAME, Constants.LIST_PATH_SEPARATOR);
   }
 
   @Override
