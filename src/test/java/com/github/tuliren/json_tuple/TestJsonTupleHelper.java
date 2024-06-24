@@ -8,7 +8,14 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestJsonTuples extends BaseTestCase {
+public class TestJsonTupleHelper extends BaseTestCase {
+
+  private final JsonTupleHelper defaultHelper = JsonTupleHelper.create().get();
+  private final JsonTupleHelper customHelper = JsonTupleHelper.create()
+      .setKeylessArrayName(CUSTOM_KEYLESS_ARRAY_NAME)
+      .setPathSeparator(CUSTOM_PATH_SEPARATOR)
+      .setListPathSeparator(CUSTOM_LIST_PATH_SEPARATOR)
+      .get();
 
   private final JsonParser parser = new JsonParser();
   private String jsonString;
@@ -17,13 +24,18 @@ public class TestJsonTuples extends BaseTestCase {
     if (jsonString == null) {
       throw new NullPointerException("Testing json string is null");
     }
+    testJson(defaultHelper);
+    testJson(customHelper);
+    jsonString = null;
+  }
+
+  private void testJson(JsonTupleHelper helper) {
     JsonObject expected = parser.parse(jsonString).getAsJsonObject();
-    List<JsonTuple> jsonTuples = JsonTuples.toTupleList(expected);
-    JsonObject actual = JsonTuples.fromTupleList(jsonTuples);
+    List<JsonTuple> jsonTuples = helper.toTupleList(expected);
+    JsonObject actual = helper.fromTupleList(jsonTuples);
     Assert.assertEquals(expected, actual);
     // the number of tuples equal to the number of comma + 1
     Assert.assertEquals(StringUtils.countMatches(jsonString, ",") + 1, jsonTuples.size());
-    jsonString = null;
   }
 
   @Test
